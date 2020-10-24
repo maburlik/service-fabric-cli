@@ -223,6 +223,7 @@ class AppTests(unittest.TestCase):
             vcr_recording = json.loads(json_str)
 
             requests_list = vcr_recording['interactions']
+            print('requests_list {}'.format(requests_list))
             self.assertEqual(len(requests_list), 8, msg='Application upload test: '
                                                         'An incorrect number of requests '
                                                         'was generated.')

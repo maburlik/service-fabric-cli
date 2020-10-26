@@ -184,9 +184,13 @@ def upload_to_native_imagestore(sesh, endpoint, abspath, basename, #pylint: disa
         total_files_count += (len(files) + 1)
 
     target_timeout = int(time()) + timeout
-    jobcount = cpu_count()
-    if jobcount is None:
-        jobcount = 2
+
+    if TEST_IMAGESTORE_UPLOAD_JOBCOUNT is None or TEST_IMAGESTORE_UPLOAD_JOBCOUNT is False: #pylint: disable=undefined-variable
+        jobcount = cpu_count()
+        if jobcount is None:
+            jobcount = 2
+    else: # Test validation VCR lib misses joblib-split http message logs
+        jobcount = 1
 
     print('jobcount={}'.format(jobcount))
 

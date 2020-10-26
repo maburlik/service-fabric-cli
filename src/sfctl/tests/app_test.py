@@ -211,7 +211,7 @@ class AppTests(unittest.TestCase):
             timeout = 65  # upload should complete
             with vcr.use_cassette(generated_file_path, record_mode='all',
                                   serializer='json'), \
-                 patch('multiprocessing.cpu_count', new=1):
+                 patch('TEST_IMAGESTORE_UPLOAD_JOBCOUNT', new=True):
 
                 sf_c.upload_to_native_imagestore(sesh, endpoint, path_to_upload_file, basename,
                                                  show_progress=False, timeout=timeout)

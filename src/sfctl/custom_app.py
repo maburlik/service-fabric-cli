@@ -74,6 +74,15 @@ def path_from_imagestore_string(imagestore_connstr):
         return conn_str_list[1]
     return False
 
+def get_job_count():
+    """
+    Test-mockable wrapper for returning cpu count.
+    """
+    jobcount = cpu_count()
+    if jobcount is None:
+        jobcount = 2
+    return jobcount
+
 def upload_to_fileshare(source, dest, show_progress):
     """
     Copies the package from source folder to dest folder
@@ -185,12 +194,7 @@ def upload_to_native_imagestore(sesh, endpoint, abspath, basename, #pylint: disa
 
     target_timeout = int(time()) + timeout
 
-    if TEST_IMAGESTORE_UPLOAD_JOBCOUNT is None or TEST_IMAGESTORE_UPLOAD_JOBCOUNT is False: #pylint: disable=undefined-variable
-        jobcount = cpu_count()
-        if jobcount is None:
-            jobcount = 2
-    else: # Test validation VCR lib misses joblib-split http message logs
-        jobcount = 1
+    jobcount = get_job_count()
 
     print('jobcount={}'.format(jobcount))
 

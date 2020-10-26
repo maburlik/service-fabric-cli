@@ -188,6 +188,8 @@ def upload_to_native_imagestore(sesh, endpoint, abspath, basename, #pylint: disa
     if jobcount is None:
         jobcount = 2
 
+    print('jobcount={}'.format(jobcount))
+
     # Note: while we are raising some exceptions regarding upload timeout, we are leaving the
     # timeouts raised by the requests library as is since it contains enough information
     for root, _, files in os.walk(abspath):
